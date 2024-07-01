@@ -1,6 +1,7 @@
 package io.luankuhlmann.ms_Customer.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.luankuhlmann.ms_Customer.enums.State;
 import jakarta.persistence.*;
 
 import java.util.Objects;
@@ -13,8 +14,9 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String state;
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 2)
+    private State state;
 
     @Column(nullable = false)
     private String city;
@@ -40,7 +42,7 @@ public class Address {
     public Address() {
     }
 
-    public Address(Long id, String state, String city, String district, String street, String number, String cep, String complement, Customer customer) {
+    public Address(Long id, State state, String city, String district, String street, String number, String cep, String complement, Customer customer) {
         this.id = id;
         this.state = state;
         this.city = city;
@@ -60,11 +62,11 @@ public class Address {
         this.id = id;
     }
 
-    public String getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(String state) {
+    public void setState(State state) {
         this.state = state;
     }
 
@@ -129,7 +131,7 @@ public class Address {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(id, address.id) && Objects.equals(state, address.state) && Objects.equals(city, address.city) && Objects.equals(district, address.district) && Objects.equals(street, address.street) && Objects.equals(number, address.number) && Objects.equals(cep, address.cep) && Objects.equals(complement, address.complement) && Objects.equals(customer, address.customer);
+        return Objects.equals(id, address.id) && state == address.state && Objects.equals(city, address.city) && Objects.equals(district, address.district) && Objects.equals(street, address.street) && Objects.equals(number, address.number) && Objects.equals(cep, address.cep) && Objects.equals(complement, address.complement) && Objects.equals(customer, address.customer);
     }
 
     @Override

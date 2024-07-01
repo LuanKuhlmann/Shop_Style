@@ -22,15 +22,14 @@ public class AddressController {
         return addressService.registerAddress(addressRequestDTO);
     }
 
-    /*@PutMapping("/{id}")
-    public ResponseEntity<Address> updateAddress(@PathVariable Long id, @Valid @RequestBody AddressRequestDTO addressRequestDTO) {
-        Address address = addressService.updateAddress(id, addressRequestDTO);
-        return ResponseEntity.ok(address);
+    @PutMapping("/{id}")
+    public ResponseEntity updateAddress(@PathVariable Long id, @Valid @RequestBody AddressRequestDTO addressRequestDTO) {
+        return addressService.updateAddress(id, addressRequestDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
         addressService.deleteAddress(id);
         return ResponseEntity.noContent().build();
-    }*/
+    }
 }

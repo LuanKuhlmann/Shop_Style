@@ -3,7 +3,7 @@ package io.luankuhlmann.ms_Customer.services;
 import io.luankuhlmann.ms_Customer.dto.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.CustomerResponseDTO;
 import io.luankuhlmann.ms_Customer.exceptions.CustomerAlreadyRegisteredException;
-import io.luankuhlmann.ms_Customer.exceptions.CustomerNotFoundException;
+import io.luankuhlmann.ms_Customer.exceptions.EntityNotFoundException;
 import io.luankuhlmann.ms_Customer.mapper.CustomerMapper;
 import io.luankuhlmann.ms_Customer.models.Customer;
 import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
@@ -25,7 +25,7 @@ public class CustomerService {
 
     public CustomerResponseDTO getCustomer(Long id) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Customer with id " + id + " not found"));
 
         return customerMapper.mapToDTO(customer);
     }
@@ -43,7 +43,7 @@ public class CustomerService {
 
     public ResponseEntity updateCustomer(Long id, CustomerRequestDTO customerRequestDTO) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Customer with id " + id + " not found"));
 
         customerMapper.updateEntityFromDTO(customer, customerRequestDTO);
         customerRepository.save(customer);
@@ -53,7 +53,7 @@ public class CustomerService {
 
     public ResponseEntity updatePassword(Long id, String newPassword) {
         Customer customer = customerRepository.findById(id)
-                .orElseThrow(() -> new CustomerNotFoundException("Customer with id " + id + " not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Customer with id " + id + " not found"));
 
         customer.setPassword(passwordEncoder.encode(newPassword));
         customerRepository.save(customer);

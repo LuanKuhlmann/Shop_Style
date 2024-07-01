@@ -16,7 +16,6 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDTO> getCustomer(@PathVariable Long id) {
         CustomerResponseDTO customer = customerService.getCustomer(id);
