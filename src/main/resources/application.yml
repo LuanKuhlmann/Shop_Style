@@ -1,0 +1,29 @@
+cors:
+  originPatterns: http://localhost:8080
+security:
+  jwt:
+    token:
+      secret-key: 53cr37
+spring:
+  application:
+  name: ms-Customer
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mscustomer
+    username: postgres
+    password: admin
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: false
+springdoc:
+  pathsToMatch:
+    - /v1/customers
+    - /v1/address
+  swagger-ui:
+    use-root-path: true
