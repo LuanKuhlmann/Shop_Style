@@ -1,13 +1,10 @@
 package io.luankuhlmann.ms_Customer.application.service;
 
-import io.luankuhlmann.ms_Customer.domain.dto.request.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.domain.dto.request.LoginRequestDTO;
 import io.luankuhlmann.ms_Customer.domain.dto.response.LoginResponseDTO;
-import io.luankuhlmann.ms_Customer.domain.enums.Sex;
 import io.luankuhlmann.ms_Customer.domain.models.Customer;
 import io.luankuhlmann.ms_Customer.framework.adapters.out.persistence.CustomerRepository;
 import io.luankuhlmann.ms_Customer.framework.adapters.out.rest.infra.security.TokenService;
-import io.luankuhlmann.ms_Customer.framework.exceptions.CustomerAlreadyRegisteredException;
 import io.luankuhlmann.ms_Customer.framework.exceptions.EntityNotFoundException;
 import io.luankuhlmann.ms_Customer.framework.exceptions.InvalidPasswordException;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,12 +16,9 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.time.LocalDate;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 
 class LoginServiceImplTest {
     @InjectMocks

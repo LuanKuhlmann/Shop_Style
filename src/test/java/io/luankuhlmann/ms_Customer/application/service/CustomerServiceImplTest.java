@@ -80,7 +80,7 @@ class CustomerServiceImplTest {
 
     @Test
     @DisplayName("Should create a customer successfully when everything is ok")
-    public void testCreateACustomer() {
+    public void testRegisterCustomer() {
         CustomerRequestDTO customerRequestDTO = createCustomerRequestDTO();
         Customer newCustomer = new Customer();
         newCustomer.setCpf("404.624.538-71");
@@ -101,7 +101,7 @@ class CustomerServiceImplTest {
 
     @Test
     @DisplayName("Should return a exception when trying to create a customer when a email is already registered")
-    public void testNotCreateACustomer() {
+    public void testNotRegisterCustomer() {
         CustomerRequestDTO customerRequestDTO = createCustomerRequestDTO();
 
         when(customerRepository.findByEmail(customerRequestDTO.email())).thenReturn(Optional.of(new Customer()));
@@ -117,7 +117,7 @@ class CustomerServiceImplTest {
 
     @Test
     @DisplayName("Should update a customer when the customer id is successfully founded")
-    public void testUpdateACustomer() {
+    public void testUpdateCustomer() {
         CustomerRequestDTO customerRequestDTO = createCustomerRequestDTO();
         Customer existingCustomer = new Customer();
         existingCustomer.setId(1L);
