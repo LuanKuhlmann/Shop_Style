@@ -1,10 +1,8 @@
 package io.luankuhlmann.ms_Customer.application.service;
 
 import io.luankuhlmann.ms_Customer.domain.dto.request.AddressRequestDTO;
-import io.luankuhlmann.ms_Customer.domain.dto.request.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.domain.enums.State;
 import io.luankuhlmann.ms_Customer.domain.mapper.AddressMapper;
-import io.luankuhlmann.ms_Customer.domain.mapper.CustomerMapper;
 import io.luankuhlmann.ms_Customer.domain.models.Address;
 import io.luankuhlmann.ms_Customer.domain.models.Customer;
 import io.luankuhlmann.ms_Customer.framework.adapters.out.persistence.AddressRepository;
@@ -18,12 +16,10 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class AddressServiceImplTest {

@@ -14,7 +14,7 @@ public record AddressRequestDTO(
         @NotBlank String street,
         @NotBlank String number,
         @NotBlank String cep,
-        String complement,
+        @NotBlank String complement,
         @NotNull Long customerId
 ) implements Serializable {
     @Serial

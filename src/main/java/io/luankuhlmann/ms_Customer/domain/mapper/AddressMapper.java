@@ -6,6 +6,19 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class AddressMapper {
+    public AddressRequestDTO mapToRequestDto(Address address) {
+        return new AddressRequestDTO(
+                address.getState(),
+                address.getCity(),
+                address.getDistrict(),
+                address.getStreet(),
+                address.getNumber(),
+                address.getCep(),
+                address.getComplement(),
+                address.getId()
+        );
+    }
+
     public Address mapToEntity(AddressRequestDTO addressRequestDTO) {
         Address address = new Address();
         address.setState(addressRequestDTO.state());
