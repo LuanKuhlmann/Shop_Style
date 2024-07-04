@@ -1,5 +1,6 @@
 package io.luankuhlmann.ms_Customer.domain.models;
 
+import io.luankuhlmann.ms_Customer.domain.enums.Sex;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
@@ -28,7 +29,7 @@ public class Customer implements Serializable {
     private String lastName;
 
     @Column(nullable = false)
-    private String sex;
+    private Sex sex;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthdate;
@@ -49,7 +50,7 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String cpf, String firstName, String lastName, String sex, LocalDate birthdate, String email, String password, boolean active, List<Address> addresses) {
+    public Customer(String cpf, String firstName, String lastName, Sex sex, LocalDate birthdate, String email, String password, boolean active, List<Address> addresses) {
         this.cpf = cpf;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -97,11 +98,11 @@ public class Customer implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getSex() {
+    public Sex getSex() {
         return sex;
     }
 
-    public void setSex(String sex) {
+    public void setSex(Sex sex) {
         this.sex = sex;
     }
 
@@ -150,7 +151,7 @@ public class Customer implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Customer customer = (Customer) o;
-        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(cpf, customer.cpf) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(sex, customer.sex) && Objects.equals(birthdate, customer.birthdate) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(addresses, customer.addresses);
+        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(cpf, customer.cpf) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && sex == customer.sex && Objects.equals(birthdate, customer.birthdate) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(addresses, customer.addresses);
     }
 
     @Override

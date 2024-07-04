@@ -1,5 +1,6 @@
 package io.luankuhlmann.ms_Customer.domain.dto.response;
 
+import io.luankuhlmann.ms_Customer.domain.enums.Sex;
 import io.luankuhlmann.ms_Customer.domain.models.Address;
 import jakarta.validation.constraints.*;
 
@@ -12,7 +13,7 @@ public record CustomerResponseDTO(
         Long id,
         String firstName,
         String lastName,
-        String sex,
+        Sex sex,
         String cpf,
         LocalDate birthdate,
         String email,

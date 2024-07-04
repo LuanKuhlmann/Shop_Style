@@ -2,6 +2,7 @@ package io.luankuhlmann.ms_Customer.application.service;
 
 import io.luankuhlmann.ms_Customer.domain.dto.request.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.domain.dto.response.CustomerResponseDTO;
+import io.luankuhlmann.ms_Customer.domain.enums.Sex;
 import io.luankuhlmann.ms_Customer.domain.mapper.CustomerMapper;
 import io.luankuhlmann.ms_Customer.domain.models.Customer;
 import io.luankuhlmann.ms_Customer.framework.adapters.out.persistence.CustomerRepository;
@@ -50,7 +51,7 @@ class CustomerServiceImplTest {
         Customer customer = new Customer();
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
-        when(customerMapper.mapToDTO(customer)).thenReturn(new CustomerResponseDTO(customer.getId(),
+        when(customerMapper.mapToResponseDTO(customer)).thenReturn(new CustomerResponseDTO(customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
                 customer.getSex(),
@@ -148,7 +149,7 @@ class CustomerServiceImplTest {
     @Test
     @DisplayName("Should validate a correct parsed cpf")
     public void testIsValidCPF() {
-        String validCpf = "529.982.247-25";
+        String validCpf = "803.290.660-64";
         customerService.isValidCPF(validCpf);
     }
 
@@ -164,11 +165,11 @@ class CustomerServiceImplTest {
     private CustomerRequestDTO createCustomerRequestDTO() {
         return new CustomerRequestDTO("Teste",
                 "Testando",
-                "Male",
-                "404.624.538.71",
+                Sex.Masculino,
+                "803.290.660-64",
                 LocalDate.of(2000, 1, 1),
-                "test@mail.com",
-                "123456",
+                "test@email.com",
+                "12345678",
                 true);
     }
 }

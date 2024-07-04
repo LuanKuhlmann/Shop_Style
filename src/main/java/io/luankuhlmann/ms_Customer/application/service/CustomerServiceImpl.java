@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
     public CustomerResponseDTO getCustomer(Long id) {
         Customer customer = getCustomerEntityById(id);
 
-        return customerMapper.mapToDTO(customer);
+        return customerMapper.mapToResponseDTO(customer);
     }
 
     public ResponseEntity registerCustomer(CustomerRequestDTO customerRequestDTO) {

@@ -12,7 +12,7 @@ public class CustomerMapper {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    public CustomerResponseDTO mapToDTO(Customer customer) {
+    public CustomerResponseDTO mapToResponseDTO(Customer customer) {
         return new CustomerResponseDTO(
                 customer.getId(),
                 customer.getFirstName(),
@@ -24,6 +24,19 @@ public class CustomerMapper {
                 customer.getPassword(),
                 customer.isActive(),
                 customer.getAddresses()
+        );
+    }
+
+    public CustomerRequestDTO mapToRequestDTO(Customer customer) {
+        return new CustomerRequestDTO(
+                customer.getFirstName(),
+                customer.getLastName(),
+                customer.getSex(),
+                customer.getCpf(),
+                customer.getBirthdate(),
+                customer.getEmail(),
+                customer.getPassword(),
+                customer.isActive()
         );
     }
 
