@@ -1,14 +1,14 @@
 package io.luankuhlmann.ms_Customer.framework.adapters.in.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.luankuhlmann.ms_Customer.application.ports.in.CustomerService;
-import io.luankuhlmann.ms_Customer.domain.dto.request.CustomerRequestDTO;
-import io.luankuhlmann.ms_Customer.domain.dto.response.CustomerResponseDTO;
-import io.luankuhlmann.ms_Customer.domain.enums.Sex;
-import io.luankuhlmann.ms_Customer.domain.enums.State;
-import io.luankuhlmann.ms_Customer.domain.mapper.CustomerMapper;
-import io.luankuhlmann.ms_Customer.domain.models.Address;
-import io.luankuhlmann.ms_Customer.domain.models.Customer;
+import io.luankuhlmann.ms_Customer.services.CustomerService;
+import io.luankuhlmann.ms_Customer.dto.request.CustomerRequestDTO;
+import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
+import io.luankuhlmann.ms_Customer.models.enums.Sex;
+import io.luankuhlmann.ms_Customer.models.enums.State;
+import io.luankuhlmann.ms_Customer.mapper.CustomerMapper;
+import io.luankuhlmann.ms_Customer.models.Address;
+import io.luankuhlmann.ms_Customer.models.Customer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

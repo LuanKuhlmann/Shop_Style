@@ -1,14 +1,15 @@
 package io.luankuhlmann.ms_Customer.application.service;
 
-import io.luankuhlmann.ms_Customer.domain.dto.request.CustomerRequestDTO;
-import io.luankuhlmann.ms_Customer.domain.dto.response.CustomerResponseDTO;
-import io.luankuhlmann.ms_Customer.domain.enums.Sex;
-import io.luankuhlmann.ms_Customer.domain.mapper.CustomerMapper;
-import io.luankuhlmann.ms_Customer.domain.models.Customer;
-import io.luankuhlmann.ms_Customer.framework.adapters.out.persistence.CustomerRepository;
-import io.luankuhlmann.ms_Customer.framework.exceptions.CustomerAlreadyRegisteredException;
-import io.luankuhlmann.ms_Customer.framework.exceptions.EntityNotFoundException;
-import io.luankuhlmann.ms_Customer.framework.exceptions.InvalidCpfException;
+import io.luankuhlmann.ms_Customer.services.CustomerServiceImpl;
+import io.luankuhlmann.ms_Customer.dto.request.CustomerRequestDTO;
+import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
+import io.luankuhlmann.ms_Customer.models.enums.Sex;
+import io.luankuhlmann.ms_Customer.mapper.CustomerMapper;
+import io.luankuhlmann.ms_Customer.models.Customer;
+import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
+import io.luankuhlmann.ms_Customer.exceptions.CustomerAlreadyRegisteredException;
+import io.luankuhlmann.ms_Customer.exceptions.EntityNotFoundException;
+import io.luankuhlmann.ms_Customer.exceptions.InvalidCpfException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

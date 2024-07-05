@@ -1,12 +1,13 @@
 package io.luankuhlmann.ms_Customer.application.service;
 
-import io.luankuhlmann.ms_Customer.domain.dto.request.LoginRequestDTO;
-import io.luankuhlmann.ms_Customer.domain.dto.response.LoginResponseDTO;
-import io.luankuhlmann.ms_Customer.domain.models.Customer;
-import io.luankuhlmann.ms_Customer.framework.adapters.out.persistence.CustomerRepository;
-import io.luankuhlmann.ms_Customer.framework.adapters.out.rest.infra.security.TokenService;
-import io.luankuhlmann.ms_Customer.framework.exceptions.EntityNotFoundException;
-import io.luankuhlmann.ms_Customer.framework.exceptions.InvalidPasswordException;
+import io.luankuhlmann.ms_Customer.services.LoginServiceImpl;
+import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
+import io.luankuhlmann.ms_Customer.dto.response.LoginResponseDTO;
+import io.luankuhlmann.ms_Customer.models.Customer;
+import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
+import io.luankuhlmann.ms_Customer.infra.security.TokenService;
+import io.luankuhlmann.ms_Customer.exceptions.EntityNotFoundException;
+import io.luankuhlmann.ms_Customer.exceptions.InvalidPasswordException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,10 +1,10 @@
 package io.luankuhlmann.ms_Customer.framework.adapters.in.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.luankuhlmann.ms_Customer.application.service.LoginServiceImpl;
-import io.luankuhlmann.ms_Customer.domain.dto.request.LoginRequestDTO;
-import io.luankuhlmann.ms_Customer.domain.dto.response.LoginResponseDTO;
-import io.luankuhlmann.ms_Customer.framework.adapters.out.rest.infra.security.TokenService;
+import io.luankuhlmann.ms_Customer.services.LoginServiceImpl;
+import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
+import io.luankuhlmann.ms_Customer.dto.response.LoginResponseDTO;
+import io.luankuhlmann.ms_Customer.infra.security.TokenService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
