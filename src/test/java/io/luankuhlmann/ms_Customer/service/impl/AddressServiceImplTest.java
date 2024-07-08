@@ -45,7 +45,7 @@ class AddressServiceImplTest {
     @DisplayName("Should successfully register a new address when everything is ok")
     public void testRegisterAddress() {
         Customer customer = mock(Customer.class);
-        when(customer.getId()).thenReturn(1L); // Definindo o ID através do mock
+        when(customer.getId()).thenReturn(1L);
 
         AddressRequestDTO addressRequestDTO = createAddressRequestDTO();
         Address newAddress = new Address();
