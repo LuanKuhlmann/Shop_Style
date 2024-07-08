@@ -23,7 +23,8 @@ spring:
     show-sql: false
 springdoc:
   pathsToMatch:
-    - /v1/customers
-    - /v1/address
+    - /v1/customers/**
+    - /v1/address/**
+    - /v1/login/**
   swagger-ui:
     use-root-path: true
