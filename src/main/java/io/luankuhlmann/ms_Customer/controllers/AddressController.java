@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Address", description = "Endpoints for managing address")
 @RestController
 @RequestMapping("/v1/address")
-@Tag(name = "Address", description = "Endpoints for managing address")
 public class AddressController {
     @Autowired
     private AddressService addressService;

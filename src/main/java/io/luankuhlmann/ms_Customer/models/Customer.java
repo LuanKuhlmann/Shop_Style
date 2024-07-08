@@ -1,6 +1,6 @@
 package io.luankuhlmann.ms_Customer.models;
 
-import io.luankuhlmann.ms_Customer.models.enums.Sex;
+import io.luankuhlmann.ms_Customer.models.enums.Gender;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 
@@ -29,7 +29,7 @@ public class Customer implements Serializable {
     private String lastName;
 
     @Column(nullable = false)
-    private Sex sex;
+    private Gender gender;
 
     @Column(name = "birth_date", nullable = false)
     private LocalDate birthdate;
@@ -50,11 +50,11 @@ public class Customer implements Serializable {
     public Customer() {
     }
 
-    public Customer(String cpf, String firstName, String lastName, Sex sex, LocalDate birthdate, String email, String password, boolean active, List<Address> addresses) {
+    public Customer(String cpf, String firstName, String lastName, Gender gender, LocalDate birthdate, String email, String password, boolean active, List<Address> addresses) {
         this.cpf = cpf;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.sex = sex;
+        this.gender = gender;
         this.birthdate = birthdate;
         this.email = email;
         this.password = password;
@@ -68,10 +68,6 @@ public class Customer implements Serializable {
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getCpf() {
@@ -98,12 +94,12 @@ public class Customer implements Serializable {
         this.lastName = lastName;
     }
 
-    public Sex getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public LocalDate getBirthdate() {
@@ -114,11 +110,11 @@ public class Customer implements Serializable {
         this.birthdate = birthdate;
     }
 
-    public String getEmail() {
+    public @Email String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
+    public void setEmail(@Email String email) {
         this.email = email;
     }
 
@@ -144,18 +140,5 @@ public class Customer implements Serializable {
 
     public void setAddresses(List<Address> addresses) {
         this.addresses = addresses;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
-        return active == customer.active && Objects.equals(id, customer.id) && Objects.equals(cpf, customer.cpf) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && sex == customer.sex && Objects.equals(birthdate, customer.birthdate) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password) && Objects.equals(addresses, customer.addresses);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, cpf, firstName, lastName, sex, birthdate, email, password, active, addresses);
     }
 }

@@ -1,6 +1,6 @@
 package io.luankuhlmann.ms_Customer.dto.response;
 
-import io.luankuhlmann.ms_Customer.models.enums.Sex;
+import io.luankuhlmann.ms_Customer.models.enums.Gender;
 import io.luankuhlmann.ms_Customer.models.Address;
 
 import java.io.Serial;
@@ -12,7 +12,7 @@ public record CustomerResponseDTO(
         Long id,
         String firstName,
         String lastName,
-        Sex sex,
+        Gender gender,
         String cpf,
         LocalDate birthdate,
         String email,

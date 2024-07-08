@@ -1,4 +1,4 @@
-package io.luankuhlmann.ms_Customer.services;
+package io.luankuhlmann.ms_Customer.services.impl;
 
 import io.luankuhlmann.ms_Customer.dto.request.AddressRequestDTO;
 import io.luankuhlmann.ms_Customer.exceptions.EntityNotFoundException;
@@ -7,6 +7,7 @@ import io.luankuhlmann.ms_Customer.models.Address;
 import io.luankuhlmann.ms_Customer.models.Customer;
 import io.luankuhlmann.ms_Customer.repositories.AddressRepository;
 import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
+import io.luankuhlmann.ms_Customer.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,7 @@ public class AddressServiceImpl implements AddressService {
     private AddressMapper addressMapper;
 
     public ResponseEntity registerAddress(AddressRequestDTO addressRequestDTO) {
-        Customer customer = customerRepository.findById(addressRequestDTO.customerId())
-                .orElseThrow(() -> new EntityNotFoundException("Customer with id " + addressRequestDTO.customerId() + " not found"));
+        Customer customer = findCustomerById(addressRequestDTO);
 
         Address newAddress = addressMapper.mapToEntity(addressRequestDTO);
 
@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     public ResponseEntity updateAddress(Long id, AddressRequestDTO addressRequestDTO) {
-        Address address = addressRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Address with id " + id + " not found"));
+        Address address = findAddressById(id);
 
         addressMapper.updateEntityFromDTO(address, addressRequestDTO);
         addressRepository.save(address);
@@ -49,5 +49,14 @@ public class AddressServiceImpl implements AddressService {
         } else {
             throw new EntityNotFoundException("Address with id " + id + " not found");
         }
+    }
+
+    private Customer findCustomerById(AddressRequestDTO addressRequestDTO) {
+        return customerRepository.findById(addressRequestDTO.customerId())
+                .orElseThrow(() -> new EntityNotFoundException("Customer with id " + addressRequestDTO.customerId() + " not found"));
+    }
+
+    private Address findAddressById(Long id) {
+        return addressRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Address with id " + id + " not found"));
     }
 }

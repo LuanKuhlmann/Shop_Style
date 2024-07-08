@@ -7,7 +7,6 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomerService {
-
     CustomerResponseDTO getCustomer(Long id);
 
     ResponseEntity registerCustomer(CustomerRequestDTO customerRequestDTO);

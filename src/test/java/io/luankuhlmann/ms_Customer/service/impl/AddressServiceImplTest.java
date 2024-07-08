@@ -1,6 +1,6 @@
-package io.luankuhlmann.ms_Customer.application.service;
+package io.luankuhlmann.ms_Customer.service.impl;
 
-import io.luankuhlmann.ms_Customer.services.AddressServiceImpl;
+import io.luankuhlmann.ms_Customer.services.impl.AddressServiceImpl;
 import io.luankuhlmann.ms_Customer.dto.request.AddressRequestDTO;
 import io.luankuhlmann.ms_Customer.models.enums.State;
 import io.luankuhlmann.ms_Customer.mapper.AddressMapper;
@@ -44,8 +44,8 @@ class AddressServiceImplTest {
     @Test
     @DisplayName("Should successfully register a new address when everything is ok")
     public void testRegisterAddress() {
-        Customer customer = new Customer();
-        customer.setId(1L);
+        Customer customer = mock(Customer.class);
+        when(customer.getId()).thenReturn(1L); // Definindo o ID através do mock
 
         AddressRequestDTO addressRequestDTO = createAddressRequestDTO();
         Address newAddress = new Address();
@@ -58,7 +58,7 @@ class AddressServiceImplTest {
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
 
-        verify(customerRepository, times(1)).findById(customer.getId());
+        verify(customerRepository, times(1)).findById(1L);
         verify(addressMapper, times(1)).mapToEntity(addressRequestDTO);
         verify(addressRepository, times(1)).save(newAddress);
     }

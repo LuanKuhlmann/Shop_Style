@@ -17,7 +17,7 @@ public class CustomerMapper {
                 customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
-                customer.getSex(),
+                customer.getGender(),
                 customer.getCpf(),
                 customer.getBirthdate(),
                 customer.getEmail(),
@@ -31,7 +31,7 @@ public class CustomerMapper {
         return new CustomerRequestDTO(
                 customer.getFirstName(),
                 customer.getLastName(),
-                customer.getSex(),
+                customer.getGender(),
                 customer.getCpf(),
                 customer.getBirthdate(),
                 customer.getEmail(),
@@ -44,7 +44,7 @@ public class CustomerMapper {
         Customer customer = new Customer();
         customer.setFirstName(customerRequestDTO.firstName());
         customer.setLastName(customerRequestDTO.lastName());
-        customer.setSex(customerRequestDTO.sex());
+        customer.setGender(customerRequestDTO.gender());
         customer.setCpf(customerRequestDTO.cpf());
         customer.setBirthdate(customerRequestDTO.birthdate());
         customer.setEmail(customerRequestDTO.email());
@@ -56,7 +56,7 @@ public class CustomerMapper {
     public void updateEntityFromDTO(Customer customer, CustomerRequestDTO customerRequestDTO) {
         customer.setFirstName(customerRequestDTO.firstName());
         customer.setLastName(customerRequestDTO.lastName());
-        customer.setSex(customerRequestDTO.sex());
+        customer.setGender(customerRequestDTO.gender());
         customer.setCpf(customerRequestDTO.cpf());
         customer.setBirthdate(customerRequestDTO.birthdate());
         customer.setEmail(customerRequestDTO.email());

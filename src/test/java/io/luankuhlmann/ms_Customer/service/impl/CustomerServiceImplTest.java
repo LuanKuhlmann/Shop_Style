@@ -1,9 +1,9 @@
-package io.luankuhlmann.ms_Customer.application.service;
+package io.luankuhlmann.ms_Customer.service.impl;
 
-import io.luankuhlmann.ms_Customer.services.CustomerServiceImpl;
+import io.luankuhlmann.ms_Customer.services.impl.CustomerServiceImpl;
 import io.luankuhlmann.ms_Customer.dto.request.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
-import io.luankuhlmann.ms_Customer.models.enums.Sex;
+import io.luankuhlmann.ms_Customer.models.enums.Gender;
 import io.luankuhlmann.ms_Customer.mapper.CustomerMapper;
 import io.luankuhlmann.ms_Customer.models.Customer;
 import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
@@ -55,7 +55,7 @@ class CustomerServiceImplTest {
         when(customerMapper.mapToResponseDTO(customer)).thenReturn(new CustomerResponseDTO(customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
-                customer.getSex(),
+                customer.getGender(),
                 customer.getCpf(),
                 customer.getBirthdate(),
                 customer.getEmail(),
@@ -117,29 +117,29 @@ class CustomerServiceImplTest {
     }
 
     @Test
-    @DisplayName("Should update a customer when the customer id is successfully founded")
+    @DisplayName("Should update a customer when the customer id is successfully found")
     public void testUpdateCustomer() {
         CustomerRequestDTO customerRequestDTO = createCustomerRequestDTO();
-        Customer existingCustomer = new Customer();
-        existingCustomer.setId(1L);
+        Customer existingCustomer = mock(Customer.class);
+        when(existingCustomer.getId()).thenReturn(1L);
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
 
-        customerService.updateCustomer(existingCustomer.getId(), customerRequestDTO);
+        customerService.updateCustomer(1L, customerRequestDTO);
 
         verify(customerRepository, times(1)).save(existingCustomer);
     }
 
     @Test
-    @DisplayName("Should update a customer password when the customer id is successfully founded")
+    @DisplayName("Should update a customer password when the customer id is successfully found")
     public void testUpdatePassword() {
         String newPassword = "newPassword";
-        Customer existingCustomer = new Customer();
-        existingCustomer.setId(1L);
+        Customer existingCustomer = mock(Customer.class);
+        when(existingCustomer.getId()).thenReturn(1L); // Definindo o ID através do mock
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
 
-        ResponseEntity<?> responseEntity = customerService.updatePassword(anyLong(), newPassword);
+        ResponseEntity<?> responseEntity = customerService.updatePassword(1L, newPassword);
 
         verify(customerRepository, times(1)).save(any());
         verify(passwordEncoder, times(1)).encode(newPassword);
@@ -166,7 +166,7 @@ class CustomerServiceImplTest {
     private CustomerRequestDTO createCustomerRequestDTO() {
         return new CustomerRequestDTO("Teste",
                 "Testando",
-                Sex.Masculino,
+                Gender.Masculino,
                 "803.290.660-64",
                 LocalDate.of(2000, 1, 1),
                 "test@email.com",

@@ -1,6 +1,6 @@
-package io.luankuhlmann.ms_Customer.application.service;
+package io.luankuhlmann.ms_Customer.service.impl;
 
-import io.luankuhlmann.ms_Customer.services.LoginServiceImpl;
+import io.luankuhlmann.ms_Customer.services.impl.LoginServiceImpl;
 import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.response.LoginResponseDTO;
 import io.luankuhlmann.ms_Customer.models.Customer;

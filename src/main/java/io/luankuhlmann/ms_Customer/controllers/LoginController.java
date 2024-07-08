@@ -2,28 +2,20 @@ package io.luankuhlmann.ms_Customer.controllers;
 
 import io.luankuhlmann.ms_Customer.dto.response.LoginResponseDTO;
 import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
-import io.luankuhlmann.ms_Customer.infra.security.TokenService;
-import io.luankuhlmann.ms_Customer.services.LoginServiceImpl;
+import io.luankuhlmann.ms_Customer.services.LoginService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Login Endpoint")
+@Tag(name = "Login", description = "Endpoints for managing login")
 @RestController
 @RequestMapping("/v1")
 public class LoginController {
     @Autowired
-    private LoginServiceImpl loginServiceImpl;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private TokenService tokenService;
+    private LoginService loginService;
 
     @PostMapping("/login")
     public LoginResponseDTO login(@RequestBody LoginRequestDTO body) {
-        return loginServiceImpl.login(body);
+        return loginService.login(body);
     }
 }

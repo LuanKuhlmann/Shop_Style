@@ -1,7 +1,7 @@
 package io.luankuhlmann.ms_Customer.handler;
 
 import io.luankuhlmann.ms_Customer.exceptions.*;
-import io.luankuhlmann.ms_Customer.framework.exceptions.*;
+import io.luankuhlmann.ms_Customer.exceptions.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;

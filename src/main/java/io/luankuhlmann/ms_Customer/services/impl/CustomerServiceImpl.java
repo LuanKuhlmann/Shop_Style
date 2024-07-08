@@ -1,4 +1,4 @@
-package io.luankuhlmann.ms_Customer.services;
+package io.luankuhlmann.ms_Customer.services.impl;
 
 import io.luankuhlmann.ms_Customer.dto.request.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
@@ -8,6 +8,7 @@ import io.luankuhlmann.ms_Customer.mapper.CustomerMapper;
 import io.luankuhlmann.ms_Customer.models.Customer;
 import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
 import io.luankuhlmann.ms_Customer.exceptions.InvalidCpfException;
+import io.luankuhlmann.ms_Customer.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,14 +33,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     public ResponseEntity registerCustomer(CustomerRequestDTO customerRequestDTO) {
-        if (customerRepository.findByEmail(customerRequestDTO.email()).isPresent()) {
-            throw new CustomerAlreadyRegisteredException("Customer with email " + customerRequestDTO.email() + " already registered");
-        }
+        findCustomerByEmail(customerRequestDTO);
         Customer newCustomer = customerMapper.mapToEntity(customerRequestDTO);
 
         isValidCPF(newCustomer.getCpf());
 
         customerRepository.save(newCustomer);
+
         return ResponseEntity.ok().build();
     }
 
@@ -48,6 +48,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         customerMapper.updateEntityFromDTO(customer, customerRequestDTO);
         customerRepository.save(customer);
+
         return ResponseEntity.ok().build();
     }
 
@@ -56,6 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setPassword(passwordEncoder.encode(newPassword));
         customerRepository.save(customer);
+
         return ResponseEntity.ok().build();
     }
 
@@ -89,5 +91,11 @@ public class CustomerServiceImpl implements CustomerService {
     private Customer getCustomerEntityById(Long id) {
         return customerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Customer with id " + id + " not found"));
+    }
+
+    private void findCustomerByEmail(CustomerRequestDTO customerRequestDTO) {
+        if (customerRepository.findByEmail(customerRequestDTO.email()).isPresent()) {
+            throw new CustomerAlreadyRegisteredException("Customer with email " + customerRequestDTO.email() + " already registered");
+        }
     }
 }

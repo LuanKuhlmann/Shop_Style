@@ -1,10 +1,10 @@
-package io.luankuhlmann.ms_Customer.framework.adapters.in.rest;
+package io.luankuhlmann.ms_Customer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.luankuhlmann.ms_Customer.services.CustomerService;
 import io.luankuhlmann.ms_Customer.dto.request.CustomerRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
-import io.luankuhlmann.ms_Customer.models.enums.Sex;
+import io.luankuhlmann.ms_Customer.models.enums.Gender;
 import io.luankuhlmann.ms_Customer.models.enums.State;
 import io.luankuhlmann.ms_Customer.mapper.CustomerMapper;
 import io.luankuhlmann.ms_Customer.models.Address;
@@ -103,7 +103,7 @@ public class CustomerControllerTest {
         mockCustomer = new Customer();
         mockCustomer.setFirstName("User");
         mockCustomer.setLastName("Admin");
-        mockCustomer.setSex(Sex.Masculino);
+        mockCustomer.setGender(Gender.Masculino);
         mockCustomer.setCpf("803.290.660-64");
         mockCustomer.setBirthdate(LocalDate.of(2000, 1, 1));
         mockCustomer.setEmail("user@email.com");

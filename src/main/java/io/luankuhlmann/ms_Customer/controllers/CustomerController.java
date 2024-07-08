@@ -9,9 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Customer", description = "Endpoints for managing customers")
 @RestController
 @RequestMapping("/v1/customers")
-@Tag(name = "Customer", description = "Endpoints for managing customers")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;

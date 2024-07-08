@@ -1,7 +1,7 @@
-package io.luankuhlmann.ms_Customer.framework.adapters.in.rest;
+package io.luankuhlmann.ms_Customer.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.luankuhlmann.ms_Customer.services.LoginServiceImpl;
+import io.luankuhlmann.ms_Customer.services.impl.LoginServiceImpl;
 import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.response.LoginResponseDTO;
 import io.luankuhlmann.ms_Customer.infra.security.TokenService;
