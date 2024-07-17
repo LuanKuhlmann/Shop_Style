@@ -19,7 +19,4 @@ public record CustomerResponseDTO(
         String password,
         boolean active,
         List<Address> addresses
-) implements Serializable {
-    @Serial
-    private static final long serialVersionUID = 1L;
-}
+) {}

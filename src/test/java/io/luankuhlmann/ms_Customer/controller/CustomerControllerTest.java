@@ -15,11 +15,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -60,17 +63,17 @@ public class CustomerControllerTest {
     @Test
     @WithMockUser
     public void testGetCustomer() throws Exception {
-        when(customerService.getCustomer(anyLong())).thenReturn(customerResponseDTO);
+        when(customerService.getCustomer(anyLong())).thenReturn(ResponseEntity.status(HttpStatus.FOUND).body(customerResponseDTO));;
 
         mockMvc.perform(get("/v1/customers/1")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isFound())
                 .andExpect(content().json(objectMapper.writeValueAsString(customerResponseDTO)));
     }
 
     @Test
     public void testRegisterCustomer() throws Exception {
-        when(customerService.registerCustomer(any(CustomerRequestDTO.class))).thenReturn(ResponseEntity.status(201).build());
+        when(customerService.registerCustomer(any(CustomerRequestDTO.class))).thenReturn(ResponseEntity.status(HttpStatus.CREATED).body(customerResponseDTO));;
 
         mockMvc.perform(post("/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -81,7 +84,7 @@ public class CustomerControllerTest {
     @Test
     @WithMockUser
     public void testUpdateCustomer() throws Exception {
-        when(customerService.updateCustomer(anyLong(), any(CustomerRequestDTO.class))).thenReturn(ResponseEntity.ok().build());
+        when(customerService.updateCustomer(anyLong(), any(CustomerRequestDTO.class))).thenReturn(ResponseEntity.status(HttpStatus.OK).body(customerResponseDTO));
 
         mockMvc.perform(put("/v1/customers/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -92,11 +95,12 @@ public class CustomerControllerTest {
     @Test
     @WithMockUser
     public void testUpdatePassword() throws Exception {
-        when(customerService.updatePassword(anyLong(), any(String.class))).thenReturn(ResponseEntity.ok().build());
+        when(customerService.updatePassword(anyLong(), any(String.class)))
+                .thenReturn(ResponseEntity.ok().build());
 
         mockMvc.perform(put("/v1/customers/1/")
                         .param("password", "newpassword123"))
-                .andExpect(status().isOk());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     private void createCustomerAndDtos() {

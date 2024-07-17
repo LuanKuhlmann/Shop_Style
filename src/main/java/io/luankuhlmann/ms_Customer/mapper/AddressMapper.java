@@ -1,11 +1,26 @@
 package io.luankuhlmann.ms_Customer.mapper;
 
 import io.luankuhlmann.ms_Customer.dto.request.AddressRequestDTO;
+import io.luankuhlmann.ms_Customer.dto.response.AddressResponseDTO;
 import io.luankuhlmann.ms_Customer.models.Address;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AddressMapper {
+    public AddressResponseDTO mapToResponseDTO(Address address) {
+        return new AddressResponseDTO(
+                address.getId(),
+                address.getState(),
+                address.getCity(),
+                address.getDistrict(),
+                address.getStreet(),
+                address.getNumber(),
+                address.getCep(),
+                address.getComplement(),
+                address.getCustomer().getId()
+        );
+    }
+
     public AddressRequestDTO mapToRequestDto(Address address) {
         return new AddressRequestDTO(
                 address.getState(),

@@ -10,6 +10,7 @@ import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
 import io.luankuhlmann.ms_Customer.exceptions.InvalidCpfException;
 import io.luankuhlmann.ms_Customer.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,39 +27,39 @@ public class CustomerServiceImpl implements CustomerService {
     private PasswordEncoder passwordEncoder;
 
 
-    public CustomerResponseDTO getCustomer(Long id) {
+    public ResponseEntity<CustomerResponseDTO> getCustomer(Long id) {
         Customer customer = getCustomerEntityById(id);
+        CustomerResponseDTO customerFound = customerMapper.mapToResponseDTO(customer);
 
-        return customerMapper.mapToResponseDTO(customer);
+        return ResponseEntity.ok(customerFound);
     }
 
-    public ResponseEntity registerCustomer(CustomerRequestDTO customerRequestDTO) {
+    public ResponseEntity<CustomerResponseDTO> registerCustomer(CustomerRequestDTO customerRequestDTO) {
         findCustomerByEmail(customerRequestDTO);
         Customer newCustomer = customerMapper.mapToEntity(customerRequestDTO);
 
         isValidCPF(newCustomer.getCpf());
 
-        customerRepository.save(newCustomer);
-
-        return ResponseEntity.ok().build();
+        CustomerResponseDTO createdCustomer = customerMapper.mapToResponseDTO(customerRepository.save(newCustomer));
+        return new ResponseEntity<>(createdCustomer, HttpStatus.CREATED);
     }
 
-    public ResponseEntity updateCustomer(Long id, CustomerRequestDTO customerRequestDTO) {
+    public ResponseEntity<CustomerResponseDTO>  updateCustomer(Long id, CustomerRequestDTO customerRequestDTO) {
         Customer customer = getCustomerEntityById(id);
 
         customerMapper.updateEntityFromDTO(customer, customerRequestDTO);
-        customerRepository.save(customer);
 
-        return ResponseEntity.ok().build();
+        CustomerResponseDTO updatedCustomer = customerMapper.mapToResponseDTO(customerRepository.save(customer));
+        return new ResponseEntity<>(updatedCustomer, HttpStatus.OK);
     }
 
-    public ResponseEntity updatePassword(Long id, String newPassword) {
+    public ResponseEntity<Void> updatePassword(Long id, String newPassword) {
         Customer customer = getCustomerEntityById(id);
 
         customer.setPassword(passwordEncoder.encode(newPassword));
         customerRepository.save(customer);
 
-        return ResponseEntity.ok().build();
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     public void isValidCPF(String cpfToValidate) {

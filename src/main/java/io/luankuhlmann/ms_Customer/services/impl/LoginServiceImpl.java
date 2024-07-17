@@ -9,6 +9,8 @@ import io.luankuhlmann.ms_Customer.models.Customer;
 import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
 import io.luankuhlmann.ms_Customer.services.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -23,12 +25,13 @@ public class LoginServiceImpl implements LoginService {
     @Autowired
     private TokenService tokenService;
 
-    public LoginResponseDTO login(LoginRequestDTO body) {
+    public ResponseEntity<LoginResponseDTO> login(LoginRequestDTO body) {
         Customer customer = findCustomerByEmail(body);
 
         if (passwordEncoder.matches(body.password(), customer.getPassword())) {
             String token = tokenService.generateToken(customer);
-            return new LoginResponseDTO(customer.getEmail(), token);
+            LoginResponseDTO response = new LoginResponseDTO(customer.getEmail(), token);
+            return new ResponseEntity<>(response, HttpStatus.OK);
         } else {
             throw new InvalidPasswordException("Invalid password");
         }

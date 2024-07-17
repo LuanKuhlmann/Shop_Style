@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
@@ -47,7 +49,7 @@ public class LoginControllerTest {
         LoginResponseDTO loginResponseDTO = new LoginResponseDTO("test@email.com", "token");
 
         Mockito.when(loginService.login(Mockito.any(LoginRequestDTO.class)))
-                .thenReturn(loginResponseDTO);
+                .thenReturn(ResponseEntity.status(HttpStatus.OK).body(loginResponseDTO));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/v1/login")
                         .contentType(MediaType.APPLICATION_JSON)

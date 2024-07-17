@@ -1,5 +1,6 @@
 package io.luankuhlmann.ms_Customer.controllers;
 
+import io.luankuhlmann.ms_Customer.dto.response.AddressResponseDTO;
 import io.luankuhlmann.ms_Customer.services.AddressService;
 import io.luankuhlmann.ms_Customer.dto.request.AddressRequestDTO;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -16,18 +17,17 @@ public class AddressController {
     private AddressService addressService;
 
     @PostMapping
-    public ResponseEntity createAddress(@Valid @RequestBody AddressRequestDTO addressRequestDTO) {
+    public ResponseEntity<AddressResponseDTO> createAddress(@Valid @RequestBody AddressRequestDTO addressRequestDTO) {
         return addressService.registerAddress(addressRequestDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateAddress(@PathVariable Long id, @Valid @RequestBody AddressRequestDTO addressRequestDTO) {
+    public ResponseEntity<AddressResponseDTO>  updateAddress(@PathVariable Long id, @Valid @RequestBody AddressRequestDTO addressRequestDTO) {
         return addressService.updateAddress(id, addressRequestDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
-        addressService.deleteAddress(id);
-        return ResponseEntity.noContent().build();
+        return addressService.deleteAddress(id);
     }
 }

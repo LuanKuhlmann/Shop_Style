@@ -1,5 +1,6 @@
 package io.luankuhlmann.ms_Customer.service.impl;
 
+import io.luankuhlmann.ms_Customer.dto.response.AddressResponseDTO;
 import io.luankuhlmann.ms_Customer.services.impl.AddressServiceImpl;
 import io.luankuhlmann.ms_Customer.dto.request.AddressRequestDTO;
 import io.luankuhlmann.ms_Customer.models.enums.State;
@@ -53,10 +54,10 @@ class AddressServiceImplTest {
         when(customerRepository.findById(addressRequestDTO.customerId())).thenReturn(Optional.of(customer));
         when(addressMapper.mapToEntity(addressRequestDTO)).thenReturn(newAddress);
 
-        ResponseEntity response = addressService.registerAddress(addressRequestDTO);
+        ResponseEntity<AddressResponseDTO> response = addressService.registerAddress(addressRequestDTO);
 
         assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
         verify(customerRepository, times(1)).findById(1L);
         verify(addressMapper, times(1)).mapToEntity(addressRequestDTO);

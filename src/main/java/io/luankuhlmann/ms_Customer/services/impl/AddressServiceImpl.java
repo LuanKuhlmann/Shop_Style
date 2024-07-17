@@ -1,6 +1,8 @@
 package io.luankuhlmann.ms_Customer.services.impl;
 
 import io.luankuhlmann.ms_Customer.dto.request.AddressRequestDTO;
+import io.luankuhlmann.ms_Customer.dto.response.AddressResponseDTO;
+import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
 import io.luankuhlmann.ms_Customer.exceptions.EntityNotFoundException;
 import io.luankuhlmann.ms_Customer.mapper.AddressMapper;
 import io.luankuhlmann.ms_Customer.models.Address;
@@ -9,6 +11,7 @@ import io.luankuhlmann.ms_Customer.repositories.AddressRepository;
 import io.luankuhlmann.ms_Customer.repositories.CustomerRepository;
 import io.luankuhlmann.ms_Customer.services.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -23,29 +26,29 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressMapper addressMapper;
 
-    public ResponseEntity registerAddress(AddressRequestDTO addressRequestDTO) {
+    public ResponseEntity<AddressResponseDTO> registerAddress(AddressRequestDTO addressRequestDTO) {
         Customer customer = findCustomerById(addressRequestDTO);
-
         Address newAddress = addressMapper.mapToEntity(addressRequestDTO);
 
         newAddress.setCustomer(customer);
-        addressRepository.save(newAddress);
 
-        return ResponseEntity.ok().build();
+        AddressResponseDTO createdAddress = addressMapper.mapToResponseDTO(addressRepository.save(newAddress));
+        return new ResponseEntity<>(createdAddress, HttpStatus.CREATED);
     }
 
-    public ResponseEntity updateAddress(Long id, AddressRequestDTO addressRequestDTO) {
+    public ResponseEntity<AddressResponseDTO> updateAddress(Long id, AddressRequestDTO addressRequestDTO) {
         Address address = findAddressById(id);
 
         addressMapper.updateEntityFromDTO(address, addressRequestDTO);
-        addressRepository.save(address);
 
-        return ResponseEntity.ok().build();
+        AddressResponseDTO updatedAddress = addressMapper.mapToResponseDTO(addressRepository.save(address));
+        return new ResponseEntity<>(updatedAddress, HttpStatus.OK);
     }
 
-    public void deleteAddress(Long id) {
+    public ResponseEntity<Void> deleteAddress(Long id) {
         if (addressRepository.existsById(id)) {
             addressRepository.deleteById(id);
+            return new ResponseEntity<>(HttpStatus.OK);
         } else {
             throw new EntityNotFoundException("Address with id " + id + " not found");
         }

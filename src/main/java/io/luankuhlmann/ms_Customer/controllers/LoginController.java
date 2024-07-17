@@ -5,6 +5,7 @@ import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
 import io.luankuhlmann.ms_Customer.services.LoginService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "Login", description = "Endpoints for managing login")
@@ -15,7 +16,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping("/login")
-    public LoginResponseDTO login(@RequestBody LoginRequestDTO body) {
+    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO body) {
         return loginService.login(body);
     }
 }

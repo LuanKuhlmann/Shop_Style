@@ -18,22 +18,21 @@ public class CustomerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<CustomerResponseDTO> getCustomer(@PathVariable Long id) {
-        CustomerResponseDTO customer = customerService.getCustomer(id);
-        return ResponseEntity.ok(customer);
+        return customerService.getCustomer(id);
     }
 
     @PostMapping
-    public ResponseEntity registerCustomer(@Valid @RequestBody CustomerRequestDTO data) {
+    public ResponseEntity<CustomerResponseDTO> registerCustomer(@Valid @RequestBody CustomerRequestDTO data) {
         return customerService.registerCustomer(data);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerRequestDTO customerRequestDTO) {
-        return customerService.updateCustomer(id, customerRequestDTO);
+    public ResponseEntity<CustomerResponseDTO> updateCustomer(@PathVariable Long id, @Valid @RequestBody CustomerRequestDTO data) {
+        return customerService.updateCustomer(id, data);
     }
 
     @PutMapping("/{id}/")
-    public ResponseEntity updatePassword(@PathVariable Long id, @RequestParam String password) {
+    public ResponseEntity<Void> updatePassword(@PathVariable Long id, @RequestParam String password) {
         return customerService.updatePassword(id, password);
     }
 }

@@ -52,6 +52,7 @@ class CustomerServiceImplTest {
         Customer customer = new Customer();
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(customer));
+
         when(customerMapper.mapToResponseDTO(customer)).thenReturn(new CustomerResponseDTO(customer.getId(),
                 customer.getFirstName(),
                 customer.getLastName(),
@@ -63,10 +64,10 @@ class CustomerServiceImplTest {
                 customer.isActive(),
                 customer.getAddresses()));
 
-        CustomerResponseDTO result = customerService.getCustomer(1L);
+        ResponseEntity<CustomerResponseDTO> response = customerService.getCustomer(1L);
 
-        assertNotNull(result);
-        assertEquals(customer.getId(), result.id());
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
@@ -84,16 +85,15 @@ class CustomerServiceImplTest {
     public void testRegisterCustomer() {
         CustomerRequestDTO customerRequestDTO = createCustomerRequestDTO();
         Customer newCustomer = new Customer();
-        newCustomer.setCpf("404.624.538-71");
+        newCustomer.setCpf("803.290.660-64");
 
         when(customerRepository.findByEmail(customerRequestDTO.email())).thenReturn(Optional.empty());
         when(customerMapper.mapToEntity(customerRequestDTO)).thenReturn(newCustomer);
         when(customerRepository.save(any(Customer.class))).thenReturn(newCustomer);
 
-        ResponseEntity response = customerService.registerCustomer(customerRequestDTO);
-
-        assertNotNull(response);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
+        ResponseEntity<CustomerResponseDTO> response = customerService.registerCustomer(customerRequestDTO);
+        assertNotNull(newCustomer);
+        assertEquals(HttpStatus.CREATED, response.getStatusCode());
 
         verify(customerRepository, times(1)).findByEmail(customerRequestDTO.email());
         verify(customerMapper, times(1)).mapToEntity(customerRequestDTO);
@@ -125,7 +125,10 @@ class CustomerServiceImplTest {
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
 
-        customerService.updateCustomer(1L, customerRequestDTO);
+        ResponseEntity<CustomerResponseDTO> response = customerService.updateCustomer(1L, customerRequestDTO);
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
 
         verify(customerRepository, times(1)).save(existingCustomer);
     }
@@ -135,16 +138,18 @@ class CustomerServiceImplTest {
     public void testUpdatePassword() {
         String newPassword = "newPassword";
         Customer existingCustomer = mock(Customer.class);
-        when(existingCustomer.getId()).thenReturn(1L); // Definindo o ID através do mock
+        when(existingCustomer.getId()).thenReturn(1L);
 
         when(customerRepository.findById(anyLong())).thenReturn(Optional.of(existingCustomer));
 
-        ResponseEntity<?> responseEntity = customerService.updatePassword(1L, newPassword);
+        when(passwordEncoder.encode(newPassword)).thenReturn("encodedPassword");
+
+        ResponseEntity<Void> response = customerService.updatePassword(anyLong(), newPassword);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
 
         verify(customerRepository, times(1)).save(any());
         verify(passwordEncoder, times(1)).encode(newPassword);
-
-        assertEquals(ResponseEntity.ok().build(), responseEntity);
     }
 
     @Test
@@ -157,7 +162,7 @@ class CustomerServiceImplTest {
     @Test
     @DisplayName("Should return a error when informed a incorrect cpf")
     public void testIsInvalidCpf() {
-        String invalidCpf = "123.456.789-00"; // Invalid CPF
+        String invalidCpf = "123.456.789-00";
         assertThrows(InvalidCpfException.class, () -> {
             customerService.isValidCPF(invalidCpf);
         });

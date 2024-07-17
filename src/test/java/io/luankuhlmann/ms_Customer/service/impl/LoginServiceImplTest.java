@@ -1,5 +1,6 @@
 package io.luankuhlmann.ms_Customer.service.impl;
 
+import io.luankuhlmann.ms_Customer.dto.response.CustomerResponseDTO;
 import io.luankuhlmann.ms_Customer.services.impl.LoginServiceImpl;
 import io.luankuhlmann.ms_Customer.dto.request.LoginRequestDTO;
 import io.luankuhlmann.ms_Customer.dto.response.LoginResponseDTO;
@@ -15,8 +16,10 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -56,11 +59,11 @@ class LoginServiceImplTest {
         Mockito.when(tokenService.generateToken(mockCustomer)).thenReturn(mockToken);
 
         LoginRequestDTO loginRequest = new LoginRequestDTO(email, password);
-        LoginResponseDTO response = loginService.login(loginRequest);
+        ResponseEntity<LoginResponseDTO> response = loginService.login(loginRequest);
 
         assertNotNull(response);
-        assertEquals(email, response.email());
-        assertEquals(mockToken, response.token());
+        assertEquals(email, Objects.requireNonNull(response.getBody()).email());
+        assertEquals(mockToken, response.getBody().token());
 
         Mockito.verify(customerRepository, Mockito.times(1)).findByEmail(email);
         Mockito.verify(passwordEncoder, Mockito.times(1)).matches(password, mockCustomer.getPassword());

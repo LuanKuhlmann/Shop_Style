@@ -21,6 +21,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
 
@@ -79,10 +80,10 @@ class AddressControllerTest {
     @Test
     @WithMockUser
     public void testDeleteAddress() throws Exception {
-        Mockito.doNothing().when(addressService).deleteAddress(anyLong());
+        when(addressService.deleteAddress(anyLong())).thenReturn(ResponseEntity.ok().build());
 
         mockMvc.perform(MockMvcRequestBuilders.delete("/v1/address/1"))
-                .andExpect(status().isNoContent());
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
 

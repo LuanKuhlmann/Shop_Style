@@ -7,11 +7,11 @@ import org.springframework.stereotype.Service;
 
 @Service
 public interface CustomerService {
-    CustomerResponseDTO getCustomer(Long id);
+    ResponseEntity<CustomerResponseDTO> getCustomer(Long id);
 
-    ResponseEntity registerCustomer(CustomerRequestDTO customerRequestDTO);
+    ResponseEntity<CustomerResponseDTO> registerCustomer(CustomerRequestDTO customerRequestDTO);
 
-    ResponseEntity updateCustomer(Long id, CustomerRequestDTO customerRequestDTO);
+    ResponseEntity<CustomerResponseDTO> updateCustomer(Long id, CustomerRequestDTO customerRequestDTO);
 
-    ResponseEntity updatePassword(Long id, String newPassword);
+    ResponseEntity<Void> updatePassword(Long id, String newPassword);
 }
